@@ -1,14 +1,43 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+import DashboardLayout from "@/components/layout/DashboardLayout";
+import StatCards from "@/components/dashboard/StatCards";
+import StreakBadges from "@/components/dashboard/StreakBadges";
+import Charts from "@/components/dashboard/Charts";
+import CalendarHeatmap from "@/components/dashboard/CalendarHeatmap";
+import AlertsFocus from "@/components/dashboard/AlertsFocus";
+import {
+  projectStats, learningStats, projectStreak, learningStreak,
+  projectCompletionData, learningCompletionData, productivityData,
+  statusDistributionData, heatmapData, atRiskTasks, upcomingDeadlines, todayFocusTasks,
+} from "@/data/mockData";
 
-const Index = () => {
+export default function Index() {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background">
-      <div className="text-center">
-        <h1 className="mb-4 text-4xl font-bold">Welcome to Your Blank App</h1>
-        <p className="text-xl text-muted-foreground">Start building your amazing project here!</p>
-      </div>
-    </div>
-  );
-};
+    <DashboardLayout>
+      <div className="space-y-6 max-w-7xl">
+        <div>
+          <h1 className="text-2xl font-bold">Dashboard</h1>
+          <p className="text-sm text-muted-foreground mt-1">Welcome back, John. Here's your overview.</p>
+        </div>
 
-export default Index;
+        {/* Section A: Stat Cards */}
+        <StatCards title="Project Overview" stats={projectStats} />
+        <StatCards title="Learning Overview" stats={learningStats} />
+
+        {/* Section B: Streaks */}
+        <StreakBadges streaks={[projectStreak, learningStreak]} />
+
+        {/* Section C: Charts */}
+        <Charts
+          projectCompletion={projectCompletionData}
+          learningCompletion={learningCompletionData}
+          productivity={productivityData}
+          statusDistribution={statusDistributionData}
+        />
+        <CalendarHeatmap data={heatmapData} />
+
+        {/* Section D: Alerts & Focus */}
+        <AlertsFocus atRisk={atRiskTasks} deadlines={upcomingDeadlines} focusTasks={todayFocusTasks} />
+      </div>
+    </DashboardLayout>
+  );
+}
