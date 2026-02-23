@@ -7,8 +7,10 @@ import AlertsFocus from "@/components/dashboard/AlertsFocus";
 import {
   projectStats, learningStats, projectStreak, learningStreak,
   projectCompletionData, learningCompletionData, productivityData,
-  statusDistributionData, heatmapData, atRiskTasks, upcomingDeadlines, todayFocusTasks,
+  statusDistributionData, monthlyHeatmapData, atRiskTasks, upcomingDeadlines, todayFocusTasks,
 } from "@/data/mockData";
+
+// console.log(monthlyHeatmapData);
 
 export default function Index() {
   return (
@@ -16,7 +18,7 @@ export default function Index() {
       <div className="space-y-6 max-w-7xl">
         <div>
           <h1 className="text-2xl font-bold">Dashboard</h1>
-          <p className="text-sm text-muted-foreground mt-1">Welcome back, John. Here's your overview.</p>
+          <p className="text-sm text-muted-foreground mt-1">Welcome back, Ajad.</p>
         </div>
 
         {/* Section A: Stat Cards */}
@@ -33,7 +35,7 @@ export default function Index() {
           productivity={productivityData}
           statusDistribution={statusDistributionData}
         />
-        <CalendarHeatmap data={heatmapData} />
+        <CalendarHeatmap data={monthlyHeatmapData} />
 
         {/* Section D: Alerts & Focus */}
         <AlertsFocus atRisk={atRiskTasks} deadlines={upcomingDeadlines} focusTasks={todayFocusTasks} />

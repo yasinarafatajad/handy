@@ -18,8 +18,8 @@ export const learningStats = [
 export const projectStreak = {
   title: "Projects",
   weeklyConsistency: [true, true, false, true, true, true, false],
-  currentStreak: 12,
-  longestStreak: 21,
+  currentStreak: 10,
+  longestStreak: 36,
 };
 
 export const learningStreak = {
@@ -62,19 +62,100 @@ export const statusDistributionData = [
   { status: "Upcoming", projects: 2, learning: 3 },
 ];
 
-export const heatmapData = (() => {
-  const data = [];
-  const today = new Date();
-  for (let i = 0; i < 90; i++) {
-    const date = new Date(today);
-    date.setDate(date.getDate() - i);
-    data.push({
-      date: date.toISOString().split("T")[0],
-      count: Math.floor(Math.random() * 5),
-    });
-  }
-  return data.reverse();
-})();
+type heatmapDataType ={date:string, count:number}
+const heatmapData:heatmapDataType[] = [
+  { date: "2025-11-26", count: 2 },
+  { date: "2025-11-27", count: 1 },
+  { date: "2025-11-28", count: 0 },
+  { date: "2025-11-29", count: 1 },
+  { date: "2025-11-30", count: 3 },
+  { date: "2025-12-01", count: 2 },
+  { date: "2025-12-02", count: 3 },
+  { date: "2025-12-03", count: 0 },
+  { date: "2025-12-04", count: 1 },
+  { date: "2025-12-05", count: 3 },
+  { date: "2025-12-06", count: 0 },
+  { date: "2025-12-07", count: 4 },
+  { date: "2025-12-08", count: 2 },
+  { date: "2025-12-09", count: 2 },
+  { date: "2025-12-10", count: 4 },
+  { date: "2025-12-11", count: 1 },
+  { date: "2025-12-12", count: 1 },
+  { date: "2025-12-13", count: 4 },
+  { date: "2025-12-14", count: 2 },
+  { date: "2025-12-15", count: 4 },
+  { date: "2025-12-16", count: 1 },
+  { date: "2025-12-17", count: 4 },
+  { date: "2025-12-18", count: 0 },
+  { date: "2025-12-19", count: 4 },
+  { date: "2025-12-20", count: 2 },
+  { date: "2025-12-21", count: 1 },
+  { date: "2025-12-22", count: 3 },
+  { date: "2025-12-23", count: 1 },
+  { date: "2025-12-24", count: 4 },
+  { date: "2025-12-25", count: 4 },
+  { date: "2025-12-26", count: 3 },
+  { date: "2025-12-27", count: 2 },
+  { date: "2025-12-28", count: 0 },
+  { date: "2025-12-29", count: 4 },
+  { date: "2025-12-30", count: 4 },
+  { date: "2025-12-31", count: 2 },
+  { date: "2026-01-01", count: 4 },
+  { date: "2026-01-02", count: 1 },
+  { date: "2026-01-03", count: 0 },
+  { date: "2026-01-04", count: 1 },
+  { date: "2026-01-05", count: 1 },
+  { date: "2026-01-06", count: 3 },
+  { date: "2026-01-07", count: 1 },
+  { date: "2026-01-08", count: 1 },
+  { date: "2026-01-09", count: 4 },
+  { date: "2026-01-10", count: 3 },
+  { date: "2026-01-11", count: 2 },
+  { date: "2026-01-12", count: 1 },
+  { date: "2026-01-13", count: 4 },
+  { date: "2026-01-14", count: 4 },
+  { date: "2026-01-15", count: 0 },
+  { date: "2026-01-16", count: 1 },
+  { date: "2026-01-17", count: 0 },
+  { date: "2026-01-18", count: 3 },
+  { date: "2026-01-19", count: 0 },
+  { date: "2026-01-20", count: 2 },
+  { date: "2026-01-21", count: 2 },
+  { date: "2026-01-22", count: 1 },
+  { date: "2026-01-23", count: 0 },
+  { date: "2026-01-24", count: 3 },
+  { date: "2026-01-25", count: 3 },
+  { date: "2026-01-26", count: 0 },
+  { date: "2026-01-27", count: 3 },
+  { date: "2026-01-28", count: 2 },
+  { date: "2026-01-29", count: 2 },
+  { date: "2026-01-30", count: 4 },
+  { date: "2026-01-31", count: 1 },
+  { date: "2026-02-01", count: 2 },
+  { date: "2026-02-02", count: 3 },
+  { date: "2026-02-03", count: 2 },
+  { date: "2026-02-04", count: 2 },
+  { date: "2026-02-05", count: 3 },
+  { date: "2026-02-06", count: 3 },
+  { date: "2026-02-07", count: 3 },
+  { date: "2026-02-08", count: 4 },
+  { date: "2026-02-09", count: 0 },
+  { date: "2026-02-10", count: 0 },
+  { date: "2026-02-11", count: 1 },
+  { date: "2026-02-12", count: 1 },
+  { date: "2026-02-13", count: 1 },
+  { date: "2026-02-14", count: 1 },
+  { date: "2026-02-15", count: 4 },
+  { date: "2026-02-16", count: 0 },
+  { date: "2026-02-17", count: 2 },
+  { date: "2026-02-18", count: 0 },
+  { date: "2026-02-19", count: 0 },
+  { date: "2026-02-20", count: 3 },
+  { date: "2026-02-21", count: 0 },
+  { date: "2026-02-22", count: 3 },
+  { date: "2026-02-23", count: 4 }
+]
+export const monthlyHeatmapData = heatmapData.slice(-30)
 
 export const atRiskTasks = [
   { id: 1, title: "API Integration Module", dueDate: "2026-02-23", type: "project", priority: "high" },

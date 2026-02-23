@@ -9,9 +9,11 @@ const getIntensity = (count) => {
 };
 
 export default function CalendarHeatmap({ data }) {
+  // console.log(data);
+  
   return (
     <Card className="p-5 border-0 shadow-sm">
-      <h4 className="font-semibold text-sm mb-4">Activity Heatmap (Last 90 Days)</h4>
+      <h4 className="font-semibold text-sm mb-4">Activity Heatmap (Last 30 Days)</h4>
       <div className="flex flex-wrap gap-1">
         {data.map((day) => (
           <div

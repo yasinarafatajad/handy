@@ -63,7 +63,7 @@ export default function AppSidebar({ collapsed, onToggle }) {
       {!isMobile && (
         <button
           onClick={onToggle}
-          className="flex items-center justify-center h-12 border-t border-border text-muted-foreground hover:text-foreground transition-colors"
+          className="flex items-center justify-center h-12 border-t border-border bg-primary/30 hover:bg-primary/40 text-muted-foreground hover:text-foreground transition-colors"
         >
           {collapsed ? <ChevronRight className="w-4 h-4" /> : <ChevronLeft className="w-4 h-4" />}
         </button>
