@@ -7,7 +7,8 @@ HANDY is a full-stack task and learning management application designed to strea
 
 ---
 
-## Time
+## ⏱️ Timeline
+
 - **Duration**: 14 days
 - **Dead Line**: 22 February 2026 - 8 March 2026
 - **Completed**: under Development
@@ -29,10 +30,9 @@ HANDY is a full-stack task and learning management application designed to strea
 - **Styling**: Tailwind CSS
 - **Package Manager**: pnpm
 
+---
 
-<!-- ---
-
-## Features
+<!-- ## Features
 
 - Modern Hero Section
 - Featured & New released Product
@@ -98,6 +98,13 @@ flowchart TD
     J --> K["routes/Task.js"]
     K --> L["controllers/"]
     J --> M["config/db.js (MongoDB)"]
+```
+
+---
+
+## Deployed
+
+this website is deployed to shared hosting.
 
 ---
 
