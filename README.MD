@@ -87,7 +87,7 @@ flowchart TD
     H --> H6["Calendar 🚧"]
     H --> H7["Settings 🚧"]
 
-    H1 --> I["Dashboard Components (5)"]
+    B --> I["Dashboard Components (5)"]
     I --> I1["StatCards"]
     I --> I2["Charts"]
     I --> I3["StreakBadges"]
