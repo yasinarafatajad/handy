@@ -6,15 +6,15 @@ import { useIsMobile } from "@/hooks/use-mobile";
 
 export default function TopNavbar({ darkMode, onToggleDark, onToggleSidebar }) {
   const isMobile = useIsMobile();
+  const home = window.location.pathname;
 
   return (
     <header className="h-16 border-b border-border bg-card/80 backdrop-blur-sm flex items-center justify-between px-4 lg:px-6 sticky top-0 z-30">
       <div className="flex items-center gap-3">
-        {isMobile && (
-          <Button variant="ghost" size="icon" onClick={onToggleSidebar}>
-            <Menu className="w-5 h-5" />
-          </Button>
-        )}
+        <Button variant="ghost" size="icon" onClick={onToggleSidebar}>
+          <Menu className="w-5 h-5" />
+        </Button>
+
         <div className="relative hidden sm:block">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
           <Input
@@ -34,15 +34,17 @@ export default function TopNavbar({ darkMode, onToggleDark, onToggleSidebar }) {
           <span className="absolute top-2 right-2 w-2 h-2 bg-destructive rounded-full" />
         </Button>
 
-        <Link to="/add-task">
-          <Button size="sm" className="rounded-lg gap-1.5">
-            <Plus className="w-4 h-4" />
-            <span className="hidden sm:inline">New Task</span>
-          </Button>
-        </Link>
+        {home === "/" &&
+          <Link to="/add-task">
+            <Button size="sm" className="rounded-lg gap-1.5">
+              <Plus className="w-4 h-4" />
+              <span className="hidden sm:inline">New Task</span>
+            </Button>
+          </Link>
+        }
 
         <div className="w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center text-sm font-semibold text-primary ml-1 cursor-pointer">
-          JD
+          A
         </div>
       </div>
     </header>
