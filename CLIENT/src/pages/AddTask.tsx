@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Plus, Trash2, ArrowLeft, GripVertical } from "lucide-react";
+import { Plus, Trash2, ArrowLeft, GripVertical, Target } from "lucide-react";
 import DashboardLayout from "@/components/layout/DashboardLayout";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -79,7 +79,6 @@ export default function AddTask() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // console.log(formData);
     try {
       const res = await api.post('/addTask', formData)
     } catch (err) {
