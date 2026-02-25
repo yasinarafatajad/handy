@@ -5,14 +5,38 @@ import Charts from "@/components/dashboard/Charts";
 import CalendarHeatmap from "@/components/dashboard/CalendarHeatmap";
 import AlertsFocus from "@/components/dashboard/AlertsFocus";
 import {
-  projectStats, learningStats, projectStreak, learningStreak,
+  projectStreak, learningStreak,
   projectCompletionData, learningCompletionData, productivityData,
   statusDistributionData, monthlyHeatmapData, atRiskTasks, upcomingDeadlines, todayFocusTasks,
 } from "@/data/mockData";
+import { useApi } from "@/hooks/useApi";
+import { useEffect, useState } from "react";
 
 // console.log(monthlyHeatmapData);
 
 export default function Index() {
+  const api = useApi();
+  const [projectStats, setProjectStats] = useState({});
+  const [learningStats, setLearningStats] = useState({})
+
+
+  // projectStats 
+  const fetchProjectStats = async () => {
+    const { data } = await api.get('/getStats?taskType=project');
+    setProjectStats(data);
+  }
+  useEffect(() => {
+    fetchProjectStats()
+  }, [])
+  // learningStats 
+  const fetchLearningStats = async () => {
+    const { data } = await api.get('/getStats?taskType=learning');
+    setLearningStats(data);
+  }
+  useEffect(() => {
+    fetchLearningStats()
+  }, [])
+
   return (
     <DashboardLayout>
       <div className="space-y-6 max-w-7xl">
@@ -23,7 +47,7 @@ export default function Index() {
 
         {/* Section A: Stat Cards */}
         <StatCards title="Project Overview" stats={projectStats} />
-        <StatCards title="Learning Overview" stats={learningStats} />
+        {/* <StatCards title="Learning Overview" stats={learningStats} /> */}
 
         {/* Section B: Streaks */}
         <StreakBadges streaks={[projectStreak, learningStreak]} />

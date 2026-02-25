@@ -6,6 +6,7 @@ import {
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useIsMobile } from "@/hooks/use-mobile";
+import logo from "../../assets/handy-icon.webp";
 
 const navItems = [
   { label: "Dashboard", icon: LayoutDashboard, path: "/" },
@@ -30,10 +31,8 @@ export default function AppSidebar({ collapsed, onToggle }) {
     >
       {/* Logo */}
       <div className={cn("flex items-center gap-2 px-4 h-16 border-b border-border shrink-0", collapsed && "justify-center")}>
-        <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center">
-          <Zap className="w-4 h-4 text-primary-foreground" />
-        </div>
-        {!collapsed && <span className="font-bold text-lg tracking-tight">TaskFlow</span>}
+        <img src={logo} alt="Handy Logo" className="h-8" />
+        {!collapsed && <span className="font-bold text-lg tracking-tight">HANDY</span>}
       </div>
 
       {/* Nav */}
