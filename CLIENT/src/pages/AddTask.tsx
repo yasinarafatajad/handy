@@ -12,6 +12,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
 import { Checkbox } from "@/components/ui/checkbox";
 import { toast } from "@/hooks/use-toast";
+import { useApi } from "@/hooks/useApi";
 
 const emptyPhase = () => ({
   id: crypto.randomUUID(),
@@ -23,6 +24,7 @@ const emptyPhase = () => ({
 
 export default function AddTask() {
   const navigate = useNavigate();
+  const api = useApi()
   const [taskType, setTaskType] = useState("project");
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
@@ -31,6 +33,7 @@ export default function AddTask() {
   const [dueDate, setDueDate] = useState("");
   const [tags, setTags] = useState("");
   const [phases, setPhases] = useState([emptyPhase()]);
+  const formData = { taskType, title, description, priority, status, dueDate, tags, phases }
 
   const addPhase = () => setPhases([...phases, emptyPhase()]);
 
@@ -66,17 +69,24 @@ export default function AddTask() {
       phases.map((p) =>
         p.id === phaseId
           ? {
-              ...p,
-              subtasks: p.subtasks.map((s) => (s.id === subtaskId ? { ...s, [field]: value } : s)),
-            }
+            ...p,
+            subtasks: p.subtasks.map((s) => (s.id === subtaskId ? { ...s, [field]: value } : s)),
+          }
           : p
       )
     );
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    toast({ title: "Task created!", description: `"${title}" has been added as a ${taskType} task.` });
+    // console.log(formData);
+    try {
+      const res = await api.post('/addTask', formData)
+    } catch (err) {
+      console.log(err);
+    } finally {
+      toast({ title: "Task created!", description: `"${title}" has been added as a ${taskType} task.` });
+    }
     navigate("/");
   };
 
