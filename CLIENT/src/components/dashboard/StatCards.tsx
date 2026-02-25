@@ -24,14 +24,16 @@ function StatCard({ stat }) {
 }
 
 export default function StatCards({ title, stats }) {
+  console.log(stats);
+  
   return (
     <div>
       <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider mb-3">{title}</h3>
-      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
+      {/* <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
         {stats.map((stat, i) => (
           <StatCard key={i} stat={stat} />
         ))}
-      </div>
+      </div> */}
     </div>
   );
 }
