@@ -27,14 +27,14 @@ export default function TopNavbar({ darkMode, onToggleDark, onToggleSidebar }) {
           {darkMode ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
         </Button>
 
-        {home === "/" &&
+        {["/", "/projects", "/learning"].includes(home) && (
           <Link to="/add-task">
             <Button size="sm" className="rounded-lg gap-1.5">
               <Plus className="w-4 h-4" />
               <span className="hidden sm:inline">New Task</span>
             </Button>
           </Link>
-        }
+        )}
 
         <div className="w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center text-sm font-semibold text-primary ml-1 cursor-pointer">
           A
