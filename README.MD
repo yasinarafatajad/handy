@@ -1,9 +1,7 @@
 # Project Name : HANDY | Project Task and Learning Management Application 
 
----
-
 ## Project Overview
-HANDY is a full-stack task and learning management application designed to streamline personal productivity through structured project tracking, progress analytics, and streak-based motivation. It features a modern React + Vite client with a scalable Express and MongoDB backend for efficient data handling. The platform centralizes tasks, learning plans, and performance insights in a clean, dashboard-driven workflow.
+HANDY is a full-stack task and learning management application designed to streamline personal productivity through structured project tracking, progress analytics, and streak-based motivation. It features a modern React + Vite + TypeScript client with a scalable Express and MongoDB backend for efficient data handling. The platform centralizes tasks, learning plans, and performance insights in a clean, dashboard-driven workflow.
 
 ---
 
@@ -15,41 +13,50 @@ HANDY is a full-stack task and learning management application designed to strea
 
 ---
 
+## Live URL
+<a href='https://handy.vercel.app' target='_blank' > visit website </a>
+
+---
+
 ## GitHub Badges
 
 ![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)
-![GitHub last commit](https://img.shields.io/github/last-commit/yasinarafatajad/focusflow-dashboard)
-![GitHub repo size](https://img.shields.io/github/repo-size/yasinarafatajad/focusflow-dashboard)
+![GitHub last commit](https://img.shields.io/github/last-commit/yasinarafatajad/handy)
+![GitHub repo size](https://img.shields.io/github/repo-size/yasinarafatajad/handy)
 
 ---
 
 ## Tech Stack
-- **Framework**: React
+- **Frontend Framework**: React
+- **Backend Framework**: Express + Node
+- **Database**: Mongo DB
 - **Build Tool**: Vite
-- **Language**: JavaScript (ES6+)
+- **Language**: Typescript
 - **Styling**: Tailwind CSS
 - **Package Manager**: pnpm
 
 ---
 
-<!-- ## Features
+## Features [client]
+**Modern Dashboard**
+- stats 
+- daily streak
+- chart [project, learning, productivity, status]
+- Alert: upcoming Deadlines, At Risk Tasks
 
-- Modern Hero Section
-- Featured & New released Product
-- Footer
-- Reach Products List Page
-- Product Details Page
-- Not Found Page
-- CI/CD for Cpanel Deployment
+**Add Task Page**
+**Projects List Page**
+**Learnings List Page**
+**Not Found Page**
+**Dark/Light Theme**
+**vercel frontend Deployment**
+**render backent Deployment**
+
+## Features [backend]
+**Task Management**
+**States Return**
+
 ---
-
-## Reminder
-
-- no DataBase
-- no login 
-- no admin
-- no checkout
-- no order -->
 
 <!-- ---
 
@@ -70,58 +77,34 @@ src/
 ```mermaid
 flowchart TD
 
-    A["Root package.json<br/>(concurrently)"] --> B["CLIENT<br/>(Vite + React + TS)"]
+    A["Root"] 
+
+    A --> B["CLIENT<br/>(Vite + React + TS)"]
     A --> C["SERVER<br/>(Express 5 + Node)"]
 
     B --> D["App.tsx (Router)"]
     D --> E["DashboardLayout"]
     E --> F["AppSidebar"]
     E --> G["TopNavbar"]
-    E --> H["Pages (8)"]
+    E --> H["Dashboard Pages"]
 
-    H --> H1["Index ✅"]
-    H --> H2["AddTask ✅"]
-    H --> H3["Projects 🚧"]
-    H --> H4["Learning 🚧"]
-    H --> H5["Analytics 🚧"]
-    H --> H6["Calendar 🚧"]
-    H --> H7["Settings 🚧"]
+    H --> H1["Overview"]
+    G --> G1["AddTask"]
 
-    B --> I["Dashboard Components (5)"]
-    I --> I1["StatCards"]
-    I --> I2["Charts"]
-    I --> I3["StreakBadges"]
-    I --> I4["CalendarHeatmap"]
-    I --> I5["AlertsFocus"]
+    F --> F1["Projects"]
+    F --> F2["Learning"]
 
     C --> J["src/index.js"]
-    J --> K["routes/Task.js"]
-    K --> L["controllers/"]
-    J --> M["config/db.js (MongoDB)"]
+    J --> K["config/db.js (MongoDB)"]
+    J --> L["routes/"]
+    L --> M["controllers/"]
 ```
 
 ---
 
 ## Deployed
 
-this website is deployed to shared hosting.
-
----
-
-## Deployed
-this website is deployed to cpanel. also intigrated CI/CD model for automation and utilise time of deployment process in update and upgrade.
-
-**Deployment flow:**
-
-Developer
-↓ (push to main)
-GitHub Actions
-↓ (install dependencies & build)
-Static Build Artifacts
-↓ (FTP upload)
-cPanel Hosting
-↓ (serve static files)
-End User (Browser)
+this client side website has been deployed to `VERCEL` and server has been in `RENDER`.
 
 ---
 
@@ -129,26 +112,21 @@ End User (Browser)
 
 | Name | Screenshot |
 |------|------------|
-| Home Page | ![Home Page](screenshots/Desktop/Home_Desktop.png) |
-| Product Details Page | ![Product Details Page](screenshots/Desktop/ProductDetails_Desktop.png) |
-| ProductList Page | ![ProductList Page](screenshots/Desktop/ProductList_Desktop.png) |
-| NotFound_Desktop Page | ![NotFound Page](screenshots/Desktop/NotFound_Desktop.png) |
-
----
-
-## Prerequisites
-- **Node.js** >= 18
-- **npm** >= 9
+| Dashboard Page | ![Dashboard Page](screenshots/dashboard.png) |
 
 ---
 
 ## Installations:
 
+### Prerequisites
+- **Node.js** >= 18
+- **npm** >= 9
+
 ### [1]: Clone the munna repository
 
 ```bash
-git clone git@github.com:yasinarafatajad/munna.git;
-cd munna
+git clone git@github.com:yasinarafatajad/handy.git;
+cd handy
 ```
 
 ### [2] Install pnpm
