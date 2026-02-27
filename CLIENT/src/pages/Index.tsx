@@ -2,16 +2,14 @@ import DashboardLayout from "@/components/layout/DashboardLayout";
 import StatCards from "@/components/dashboard/StatCards";
 import StreakBadges from "@/components/dashboard/StreakBadges";
 import Charts from "@/components/dashboard/Charts";
-import CalendarHeatmap from "@/components/dashboard/CalendarHeatmap";
 import AlertsFocus from "@/components/dashboard/AlertsFocus";
-import {
-  projectStreak, learningStreak, productivityData, atRiskTasks, upcomingDeadlines, todayFocusTasks,
-} from "@/data/mockData";
+import { projectStreak, learningStreak, productivityData} from "@/data/mockData";
 import { useApi } from "@/hooks/useApi";
 import { useEffect, useState } from "react";
 
 const Index = () => {
   const api = useApi();
+  const [allProjects, setAllProjects] = useState([]);
   const [projectStats, setProjectStats] = useState([]);
   const [learningStats, setLearningStats] = useState([])
   const statusDistribution = [
@@ -23,20 +21,28 @@ const Index = () => {
   ]
 
   // projectStats 
-  const fetchProjectStats = async () => {
-    const { data } = await api.get('/getStats?taskType=project');
-    setProjectStats(data);
-  }
   useEffect(() => {
+    const fetchProjectStats = async () => {
+      const { data } = await api.get('/getStats?taskType=project');
+      setProjectStats(data);
+    }
     fetchProjectStats()
   }, [])
   // learningStats 
-  const fetchLearningStats = async () => {
-    const { data } = await api.get('/getStats?taskType=learning');
-    setLearningStats(data);
-  }
   useEffect(() => {
+    const fetchLearningStats = async () => {
+      const { data } = await api.get('/getStats?taskType=learning');
+      setLearningStats(data);
+    }
     fetchLearningStats()
+  }, [])
+  // all projects 
+  useEffect(() => {
+    const fetchAllProjects = async () => {
+      const { data } = await api.get('/getAllTasks');
+      setAllProjects(data);
+    }
+    fetchAllProjects()
   }, [])
 
   return (
@@ -63,7 +69,7 @@ const Index = () => {
         />
 
         {/* Section D: Alerts & Focus */}
-        <AlertsFocus atRisk={atRiskTasks} deadlines={upcomingDeadlines} focusTasks={todayFocusTasks} />
+        <AlertsFocus allTasks={allProjects} />
       </div>
     </DashboardLayout>
   );
