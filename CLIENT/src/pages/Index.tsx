@@ -5,20 +5,22 @@ import Charts from "@/components/dashboard/Charts";
 import CalendarHeatmap from "@/components/dashboard/CalendarHeatmap";
 import AlertsFocus from "@/components/dashboard/AlertsFocus";
 import {
-  projectStreak, learningStreak,
-  projectCompletionData, learningCompletionData, productivityData,
-  statusDistributionData, monthlyHeatmapData, atRiskTasks, upcomingDeadlines, todayFocusTasks,
+  projectStreak, learningStreak, productivityData, atRiskTasks, upcomingDeadlines, todayFocusTasks,
 } from "@/data/mockData";
 import { useApi } from "@/hooks/useApi";
 import { useEffect, useState } from "react";
 
-// console.log(monthlyHeatmapData);
-
-export default function Index() {
+const Index = () => {
   const api = useApi();
-  const [projectStats, setProjectStats] = useState({});
-  const [learningStats, setLearningStats] = useState({})
-
+  const [projectStats, setProjectStats] = useState([]);
+  const [learningStats, setLearningStats] = useState([])
+  const statusDistribution = [
+    { status: "Pending", projects: projectStats?.find(i => i.name === "pending")?.value, learning: learningStats?.find(i => i.name === "pending")?.value },
+    { status: "In Progress", projects: projectStats?.find(i => i.name === "inProgress")?.value, learning: learningStats?.find(i => i.name === "inProgress")?.value },
+    { status: "Completed", projects: projectStats?.find(i => i.name === "completed")?.value, learning: learningStats?.find(i => i.name === "completed")?.value },
+    { status: "Overdue", projects: projectStats?.find(i => i.name === "overDue")?.value, learning: learningStats?.find(i => i.name === "overDue")?.value },
+    { status: "Upcoming", projects: projectStats?.find(i => i.name === "upComing")?.value, learning: learningStats?.find(i => i.name === "upComing")?.value },
+  ]
 
   // projectStats 
   const fetchProjectStats = async () => {
@@ -39,7 +41,7 @@ export default function Index() {
 
   return (
     <DashboardLayout>
-      <div className="space-y-6 max-w-7xl">
+      <div className="space-y-6">
         <div>
           <h1 className="text-2xl font-bold">Dashboard</h1>
           <p className="text-sm text-muted-foreground mt-1">Welcome back, Ajad.</p>
@@ -47,19 +49,18 @@ export default function Index() {
 
         {/* Section A: Stat Cards */}
         <StatCards title="Project Overview" stats={projectStats} />
-        {/* <StatCards title="Learning Overview" stats={learningStats} /> */}
+        <StatCards title="Learning Overview" stats={learningStats} />
 
         {/* Section B: Streaks */}
         <StreakBadges streaks={[projectStreak, learningStreak]} />
 
         {/* Section C: Charts */}
         <Charts
-          projectCompletion={projectCompletionData}
-          learningCompletion={learningCompletionData}
+          projectCompletion={projectStats}
+          learningCompletion={learningStats}
+          statusDistribution={statusDistribution}
           productivity={productivityData}
-          statusDistribution={statusDistributionData}
         />
-        <CalendarHeatmap data={monthlyHeatmapData} />
 
         {/* Section D: Alerts & Focus */}
         <AlertsFocus atRisk={atRiskTasks} deadlines={upcomingDeadlines} focusTasks={todayFocusTasks} />
@@ -67,3 +68,5 @@ export default function Index() {
     </DashboardLayout>
   );
 }
+
+export default Index;
