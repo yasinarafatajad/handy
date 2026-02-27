@@ -30,6 +30,7 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
 import { toast } from "@/hooks/use-toast";
+import { Link } from "react-router-dom";
 
 
 
@@ -89,7 +90,11 @@ const Projects = () => {
                     </Button>
                   </DropdownMenuTrigger>
                   <DropdownMenuContent align="end">
-                    <DropdownMenuItem>Edit</DropdownMenuItem>
+                    <Link to={`/edit-task/${e?._id}`} >
+                      <DropdownMenuItem>
+                        Edit
+                      </DropdownMenuItem>
+                    </Link>
                     <DropdownMenuSeparator />
                     <AlertDialog>
                       <AlertDialogTrigger asChild>
