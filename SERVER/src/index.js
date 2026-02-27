@@ -10,8 +10,8 @@ const app = express();
 
 // conneect to database
 connectDB();
-
-const corsPolicy = {origin: "http://localhost:8080", credentials:true}
+const allowedOrigins = ["http://localhost:8080", "https://ajad.pro.bd", "https://handy-hazel.vercel.app", "https://handy-ajad.vercel.app"]
+const corsPolicy = {origin: allowedOrigins, credentials:true}
 // middleware
 app.use(cors(corsPolicy));
 app.use(express.json());
