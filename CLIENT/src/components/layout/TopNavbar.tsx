@@ -13,13 +13,13 @@ export default function TopNavbar({ darkMode, onToggleDark, onToggleSidebar }) {
           <Menu className="w-5 h-5" />
         </Button>
 
-        <div className="relative hidden sm:block">
+        {/* <div className="relative hidden sm:block">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
           <Input
             placeholder="Search tasks, projects..."
             className="pl-9 w-64 bg-muted/50 border-0 focus-visible:ring-1"
           />
-        </div>
+        </div> */}
       </div>
 
       <div className="flex items-center gap-2">
