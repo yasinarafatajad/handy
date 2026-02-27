@@ -13,8 +13,12 @@ export const createTask = async (req, res) => {
 
 // Get all tasks
 export const getAllTasks = async (req, res) => {
+  const { taskType } = req.query;
+  const typeFilter = {}
+  if (taskType) typeFilter.taskType = taskType;
+
   try {
-    const tasks = await Task.find();
+    const tasks = await Task.find(typeFilter);
     res.json(tasks);
   } catch (err) {
     res.status(500).json({ error: err.message });
