@@ -1,9 +1,5 @@
-import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import {
-  LayoutDashboard, FolderKanban, GraduationCap, Calendar,
-  BarChart3, Settings, ChevronLeft, ChevronRight, Zap,
-} from "lucide-react";
+import { LayoutDashboard, FolderKanban, GraduationCap, ChevronLeft, ChevronRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useIsMobile } from "@/hooks/use-mobile";
 import logo from "../../assets/handy-icon.webp";
@@ -12,9 +8,6 @@ const navItems = [
   { label: "Dashboard", icon: LayoutDashboard, path: "/" },
   { label: "Projects", icon: FolderKanban, path: "/projects" },
   { label: "Learning", icon: GraduationCap, path: "/learning" },
-  { label: "Calendar", icon: Calendar, path: "/calendar" },
-  { label: "Analytics", icon: BarChart3, path: "/analytics" },
-  { label: "Settings", icon: Settings, path: "/settings" },
 ];
 
 export default function AppSidebar({ collapsed, onToggle }) {
@@ -44,7 +37,7 @@ export default function AppSidebar({ collapsed, onToggle }) {
               key={item.path}
               to={item.path}
               className={cn(
-                "flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-200",
+                "flex items-center gap-3 px-3 py-2.5 rounded text-sm font-medium shadow-sm transition-all duration-200",
                 active
                   ? "bg-sidebar-accent text-sidebar-accent-foreground shadow-sm"
                   : "text-muted-foreground hover:bg-muted hover:text-foreground",
