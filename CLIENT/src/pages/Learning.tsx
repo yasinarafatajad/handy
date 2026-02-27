@@ -17,7 +17,19 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table"
+} from "@/components/ui/table";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
+import { toast } from "@/hooks/use-toast";
 
 export default function Learning() {
   const api = useApi()
@@ -30,6 +42,18 @@ export default function Learning() {
   useEffect(() => {
     fetchProjects()
   }, [])
+
+  // handle delete task
+  const handleTaskDelete = async (e) => {
+    try {
+      const res = await api.delete(`/task/${e?._id}`);
+      if (res.status === 200) return fetchProjects();
+    } catch (err) {
+      console.log(err.message);
+    } finally {
+      toast({ title: `${e?.taskType} deleted!`, description: `${e?.title} has been deleted.` })
+    }
+  }
   return (
     <DashboardLayout>
       <Table>
@@ -45,9 +69,9 @@ export default function Learning() {
           </TableRow>
         </TableHeader>
         {/* table body */}
-        {projects?.reverse().map((e, i) => (
-          <TableBody key={i}>
-            <TableRow>
+        <TableBody>
+          {[...projects]?.reverse().map((e, i) => (
+            <TableRow key={i}>
               <TableCell className="font-medium">{i + 1}</TableCell>
               <TableCell>{e?.title}</TableCell>
               <TableCell>{e?.dueDate}</TableCell>
@@ -56,6 +80,7 @@ export default function Learning() {
               <TableCell className="text-right">
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
+
                     <Button variant="ghost" size="icon" className="size-8">
                       <MoreHorizontalIcon />
                       <span className="sr-only">Open menu</span>
@@ -64,16 +89,35 @@ export default function Learning() {
                   <DropdownMenuContent align="end">
                     <DropdownMenuItem>Edit</DropdownMenuItem>
                     <DropdownMenuSeparator />
-                    <DropdownMenuItem>
-                      Delete
-                    </DropdownMenuItem>
+                    <AlertDialog>
+                      <AlertDialogTrigger asChild>
+                        <DropdownMenuItem onSelect={(e) => e.preventDefault()} className="text-destructive">
+                          Delete
+                        </DropdownMenuItem>
+                      </AlertDialogTrigger>
+
+                      <AlertDialogContent>
+                        <AlertDialogHeader>
+                          <AlertDialogTitle>Delete {e?.title}?</AlertDialogTitle>
+                          <AlertDialogDescription>
+                            This action cannot be undone. This will permanently delete from our server.
+                          </AlertDialogDescription>
+                        </AlertDialogHeader>
+                        <AlertDialogFooter>
+                          <AlertDialogCancel>Cancel</AlertDialogCancel>
+                          <AlertDialogAction onClick={() => handleTaskDelete(e)} className="bg-destructive text-destructive-foreground hover:bg-destructive/90">Continue</AlertDialogAction>
+                        </AlertDialogFooter>
+                      </AlertDialogContent>
+                    </AlertDialog>
                   </DropdownMenuContent>
                 </DropdownMenu>
               </TableCell>
             </TableRow>
-          </TableBody>
-        ))}
+          ))}
+        </TableBody>
       </Table>
+
+
     </DashboardLayout>
   )
 }
