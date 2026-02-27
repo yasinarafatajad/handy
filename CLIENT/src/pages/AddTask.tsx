@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import { Plus, Trash2, ArrowLeft, GripVertical, Target } from "lucide-react";
 import DashboardLayout from "@/components/layout/DashboardLayout";
 import { Card } from "@/components/ui/card";
@@ -23,8 +23,11 @@ const emptyPhase = () => ({
 });
 
 export default function AddTask() {
-  const navigate = useNavigate();
+  const { id } = useParams()
+  const isEdit = !!id;
   const api = useApi()
+  const navigate = useNavigate();
+  const [loading, setLoading] = useState(false)
   const [taskType, setTaskType] = useState("project");
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
@@ -36,6 +39,15 @@ export default function AddTask() {
   const formData = { taskType, title, description, priority, status, dueDate, tags, phases }
 
   const addPhase = () => setPhases([...phases, emptyPhase()]);
+  const normalizePhases = (phases) =>
+    phases.map((p) => ({
+      ...p,
+      id: p._id || p.id,
+      subtasks: p.subtasks.map((s) => ({
+        ...s,
+        id: s._id || s.id,
+      })),
+    }));
 
   const removePhase = (phaseId) => {
     if (phases.length <= 1) return;
@@ -77,18 +89,55 @@ export default function AddTask() {
     );
   };
 
+  useEffect(() => {
+    if (!id) return
+
+    const fetchTask = async () => {
+      setLoading(true)
+      try {
+        const { data } = await api.get(`/task/${id}`);
+        setTaskType(data.taskType)
+        setTitle(data.title)
+        setDescription(data.description)
+        setPriority(data.priority)
+        setStatus(data.status)
+        setDueDate(data.dueDate)
+        setTags(data.tags)
+        setPhases(normalizePhases(data.phases))
+      } catch (err) {
+        console.log(err.message);
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    fetchTask()
+  }, [id])
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await api.post('/addTask', formData)
+      if (isEdit) {
+        await api.put(`/task/${id}`, formData)
+
+        toast({
+          title: `${taskType} updated!`,
+          description: `"${title}" has been updated.`,
+        })
+      } else {
+        await api.post("/addTask", formData)
+
+        toast({
+          title: `${taskType} created!`,
+          description: `"${title}" added.`,
+        })
+      }
     } catch (err) {
       console.log(err);
-    } finally {
-      toast({ title: "Task created!", description: `"${title}" has been added as a ${taskType} task.` });
     }
     navigate("/");
   };
-
+  if (loading) return <p>Loading...</p>
   return (
     <DashboardLayout>
       <div className="max-w-3xl mx-auto space-y-6">
@@ -97,7 +146,9 @@ export default function AddTask() {
             <ArrowLeft className="w-5 h-5" />
           </Button>
           <div>
-            <h1 className="text-2xl font-bold">Add New Task</h1>
+            <h1 className="text-2xl font-bold">
+              {isEdit ? "Edit Task" : "Add New Task"}
+            </h1>
             <p className="text-sm text-muted-foreground">Create a project task or learning task</p>
           </div>
         </div>
@@ -174,7 +225,7 @@ export default function AddTask() {
 
             <div className="space-y-4">
               {phases.map((phase, phaseIndex) => (
-                <div key={phase.id} className="rounded-xl border border-border p-4 space-y-3 bg-muted/30">
+                <div key={phase.id || phase._id} className="rounded-xl border border-border p-4 space-y-3 bg-muted/30">
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2">
                       <GripVertical className="w-4 h-4 text-muted-foreground" />
@@ -213,7 +264,7 @@ export default function AddTask() {
                       </Button>
                     </div>
                     {phase.subtasks.map((sub) => (
-                      <div key={sub.id} className="flex items-center gap-2">
+                      <div key={sub.id || sub?._id} className="flex items-center gap-2">
                         <Checkbox
                           checked={sub.completed}
                           onCheckedChange={(v) => updateSubtask(phase.id, sub.id, "completed", !!v)}
@@ -238,7 +289,9 @@ export default function AddTask() {
           {/* Submit */}
           <div className="flex items-center gap-3 justify-end">
             <Button type="button" variant="outline" onClick={() => navigate(-1)}>Cancel</Button>
-            <Button type="submit">Create {taskType === "project" ? "Project" : "Learning"} Task</Button>
+            <Button type="submit">
+              {isEdit ? `Update ${taskType === "project" ? "Project" : "Learning"} Task` : `Create ${taskType === "project" ? "Project" : "Learning"} Task`}
+            </Button>
           </div>
         </form>
       </div>

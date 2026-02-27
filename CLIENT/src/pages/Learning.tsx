@@ -30,6 +30,7 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { toast } from "@/hooks/use-toast";
+import { Link } from "react-router-dom";
 
 export default function Learning() {
   const api = useApi()
@@ -87,7 +88,11 @@ export default function Learning() {
                     </Button>
                   </DropdownMenuTrigger>
                   <DropdownMenuContent align="end">
-                    <DropdownMenuItem>Edit</DropdownMenuItem>
+                    <Link to={`/edit-task/${e?._id}`} >
+                      <DropdownMenuItem>
+                        Edit
+                      </DropdownMenuItem>
+                    </Link>
                     <DropdownMenuSeparator />
                     <AlertDialog>
                       <AlertDialogTrigger asChild>
