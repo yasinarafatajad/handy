@@ -1,11 +1,9 @@
-import { Search, Bell, Plus, Moon, Sun, Menu } from "lucide-react";
+import { Search, Plus, Moon, Sun, Menu } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { useIsMobile } from "@/hooks/use-mobile";
 
 export default function TopNavbar({ darkMode, onToggleDark, onToggleSidebar }) {
-  const isMobile = useIsMobile();
   const home = window.location.pathname;
 
   return (
@@ -27,11 +25,6 @@ export default function TopNavbar({ darkMode, onToggleDark, onToggleSidebar }) {
       <div className="flex items-center gap-2">
         <Button variant="ghost" size="icon" onClick={onToggleDark} className="text-muted-foreground">
           {darkMode ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
-        </Button>
-
-        <Button variant="ghost" size="icon" className="relative text-muted-foreground">
-          <Bell className="w-4 h-4" />
-          <span className="absolute top-2 right-2 w-2 h-2 bg-destructive rounded-full" />
         </Button>
 
         {home === "/" &&
