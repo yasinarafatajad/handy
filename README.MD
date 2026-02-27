@@ -113,6 +113,7 @@ this client side website has been deployed to `VERCEL` and server has been in `R
 | Name | Screenshot |
 |------|------------|
 | Dashboard Page | ![Dashboard Page](screenshots/dashboard.png) |
+| Lists Page | ![Lists Page](screenshots/Lists.png) |
 
 ---
 
