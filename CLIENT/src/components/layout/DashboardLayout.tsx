@@ -26,13 +26,13 @@ export default function DashboardLayout({ children }) {
         <div className="fixed inset-0 z-30 bg-foreground/20 backdrop-blur-sm" onClick={() => setCollapsed(true)} />
       )}
 
-      <div className={cn("flex-1 flex flex-col transition-all duration-300", collapsed ? "ml-0 lg:ml-[68px]" : "ml-0 lg:ml-60")}>
+      <div className={cn("flex-1 min-w-0  flex flex-col transition-all duration-300", collapsed ? "ml-0 lg:ml-[68px]" : "ml-0 lg:ml-60")}>
         <TopNavbar
           darkMode={darkMode}
           onToggleDark={() => setDarkMode(!darkMode)}
           onToggleSidebar={() => setCollapsed(!collapsed)}
         />
-        <main className="flex-1 p-4 lg:p-6 overflow-y-auto">
+        <main className="flex-1 p-4 lg:p-6 min-w-0 overflow-y-auto">
           {children}
         </main>
       </div>
