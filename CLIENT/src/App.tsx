@@ -7,6 +7,7 @@ import Index from "./pages/Index";
 import AddTask from "./pages/AddTask";
 import Projects from "./pages/Projects";
 import Learning from "./pages/Learning";
+import ProjectDetails from "./pages/ProjectDetails";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -22,7 +23,9 @@ const App = () => (
           <Route path="/add-task" element={<AddTask />} />
           <Route path="/edit-task/:id" element={<AddTask />} />
           <Route path="/projects" element={<Projects />} />
+          <Route path="/projects/:id" element={<ProjectDetails />} />
           <Route path="/learning" element={<Learning />} />
+          <Route path="/learnings/:id" element={<ProjectDetails />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>

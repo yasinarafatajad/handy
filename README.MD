@@ -47,6 +47,8 @@ HANDY is a full-stack project and learning management application designed to st
 **Add Task Page**
 **Projects List Page**
 **Learnings List Page**
+**Project Details Page**
+**Learning Details Page**
 **Not Found Page**
 **Dark/Light Theme**
 **vercel frontend Deployment**
@@ -92,7 +94,9 @@ flowchart TD
     G --> G1["AddTask"]
 
     F --> F1["Projects"]
+    F1 --> F3["ProjectDetails"]
     F --> F2["Learning"]
+    F2 --> F4["LearningDetails"]
 
     C --> J["src/index.js"]
     J --> K["config/db.js (MongoDB)"]
@@ -114,6 +118,7 @@ this client side website has been deployed to `VERCEL` and server has been in `R
 |------|------------|
 | Dashboard Page | ![Dashboard Page](screenshots/dashboard.png) |
 | Lists Page | ![Lists Page](screenshots/Lists.png) |
+| Project Details Page | ![Project Details Page](screenshots/projectDetails.png) |
 
 ---
 
