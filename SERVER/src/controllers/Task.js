@@ -14,7 +14,7 @@ export const createTask = async (req, res) => {
 // Get all tasks
 export const getAllTasks = async (req, res) => {
   const { taskType } = req.query;
-  const typeFilter = {}
+  const typeFilter = {};
   if (taskType) typeFilter.taskType = taskType;
 
   try {
@@ -38,7 +38,9 @@ export const getTaskById = async (req, res) => {
 // Update a task by ID
 export const updateTask = async (req, res) => {
   try {
-    const task = await Task.findByIdAndUpdate(req.params.id, req.body, { new: true });
+    const task = await Task.findByIdAndUpdate(req.params.id, req.body, {
+      new: true,
+    });
     if (!task) return res.status(404).json({ error: "Task not found" });
     res.json(task);
   } catch (err) {
@@ -74,8 +76,8 @@ export const addPhase = async (req, res) => {
 // Update a subtask inside a phase
 export const updateSubtask = async (req, res) => {
   try {
-    const { taskId, phaseId, subtaskId } = req.params;
-    const task = await Task.findById(taskId);
+    const { id, phaseId, subtaskId } = req.params;
+    const task = await Task.findById(id);
     if (!task) return res.status(404).json({ error: "Task not found" });
 
     const phase = task.phases.id(phaseId);
@@ -85,6 +87,27 @@ export const updateSubtask = async (req, res) => {
     if (!subtask) return res.status(404).json({ error: "Subtask not found" });
 
     Object.assign(subtask, req.body); // update subtask fields
+    await task.save();
+    res.json(task);
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
+};
+
+// Delete a subtask from a phase
+export const deleteSubtask = async (req, res) => {
+  try {
+    const { id, phaseId, subtaskId } = req.params;
+    const task = await Task.findById(id);
+    if (!task) return res.status(404).json({ error: "Task not found" });
+
+    const phase = task.phases.id(phaseId);
+    if (!phase) return res.status(404).json({ error: "Phase not found" });
+
+    const subtask = phase.subtasks.id(subtaskId);
+    if (!subtask) return res.status(404).json({ error: "Subtask not found" });
+
+    subtask.deleteOne();
     await task.save();
     res.json(task);
   } catch (err) {

@@ -76,7 +76,11 @@ const Projects = () => {
           {[...projects]?.reverse().map((e, i) => (
             <TableRow key={i}>
               <TableCell className="font-medium">{i + 1}</TableCell>
-              <TableCell>{e?.title}</TableCell>
+              <TableCell>
+                <Link to={`/projects/${e?._id}`} className="font-medium hover:text-primary hover:underline underline-offset-4 transition-colors">
+                  {e?.title}
+                </Link>
+              </TableCell>
               <TableCell>{e?.dueDate}</TableCell>
               <TableCell>{e?.status}</TableCell>
               <TableCell>{e?.priority}</TableCell>
