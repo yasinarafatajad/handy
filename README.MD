@@ -9,7 +9,7 @@ HANDY is a full-stack project and learning management application designed to st
 
 - **Duration**: 14 days
 - **Dead Line**: 22 February 2026 - 8 March 2026
-- **Completed**: under Development
+- **Completed**: 01 March 2026
 
 ---
 
