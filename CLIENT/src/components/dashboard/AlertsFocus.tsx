@@ -2,6 +2,14 @@ import { AlertTriangle, Calendar } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { useMemo } from "react";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table"
 
 const AlertsFocus = ({ allTasks }) => {
 
@@ -13,7 +21,7 @@ const AlertsFocus = ({ allTasks }) => {
       .filter(task => {
         const startDate = new Date(task?.phases[0]?.startDate);
         startDate.setHours(0, 0, 0, 0);
-        return startDate.getTime() > today.getTime() && task?.status !== "completed";
+        return startDate.getTime() >= today.getTime() && task?.status !== "completed";
       })
       .map(task => ({
         id: task?._id,
@@ -33,7 +41,7 @@ const AlertsFocus = ({ allTasks }) => {
       .filter(task => {
         const dueDate = new Date(task?.dueDate);
         dueDate.setHours(0, 0, 0, 0); // normalize task due date
-        return dueDate <= today && task?.status !== "completed";
+        return dueDate >= today && task?.status !== "completed";
       })
       .map(task => ({
         id: task?._id,
@@ -52,23 +60,28 @@ const AlertsFocus = ({ allTasks }) => {
           <Calendar className="w-4 h-4 text-info" />
           <h4 className="font-semibold text-sm">Upcoming Deadlines</h4>
         </div>
-        <table className="space-y-2 ">
+        <Table>
+          <TableHeader>
+            <TableRow className="flex items-center justify-between gap-2 text-center">
+              <TableHead>Task Type</TableHead>
+              <TableHead>Title</TableHead>
+              <TableHead>Start Date</TableHead>
+              <TableHead>Due Date</TableHead>
+            </TableRow>
+          </TableHeader>
 
-          <tr className="flex items-center justify-between text-center border-b">
-            <td className="text-md text-foreground px-4">Task Type</td>
-            <td className="text-sm px-4">Title</td>
-            <td className="text-xs text-muted-foreground px-4">Start Date</td>
-            <td className="text-xs text-muted-foreground px-4">Due Date</td>
-          </tr>
-          {[...deadlines].reverse().map((d) => (
-            <tr key={d.id} className="flex items-center justify-between gap-2 text-center">
-              <td className="text-md text-foreground uppercase bg-foreground/20 rounded px-2">{d.taskType}</td>
-              <td className="text-sm">{d.title}</td>
-              <td className="text-xs text-muted-foreground">{d.startDate}</td>
-              <td className="text-xs text-muted-foreground">{d.dueDate}</td>
-            </tr>
-          ))}
-        </table>
+          <TableBody>
+            {[...deadlines].reverse().map((d) => (
+              <TableRow key={d.id} className="flex items-center justify-between gap-2 text-center">
+                <TableCell className="text-md text-foreground uppercase bg-foreground/10 rounded">{d.taskType}</TableCell>
+                <TableCell className="text-sm">{d.title}</TableCell>
+                <TableCell className="text-xs text-muted-foreground">{d.startDate}</TableCell>
+                <TableCell className="text-xs text-muted-foreground">{d.dueDate}</TableCell>
+              </TableRow>
+            ))}
+            {/* </table> */}
+          </TableBody>
+        </Table>
       </Card>
 
       {/* At Risk */}

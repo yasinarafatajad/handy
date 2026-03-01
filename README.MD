@@ -1,7 +1,7 @@
 # Project Name : HANDY | Project Task and Learning Management Application 
 
 ## Project Overview
-HANDY is a full-stack task and learning management application designed to streamline personal productivity through structured project tracking, progress analytics, and streak-based motivation. It features a modern React + Vite + TypeScript client with a scalable Express and MongoDB backend for efficient data handling. The platform centralizes tasks, learning plans, and performance insights in a clean, dashboard-driven workflow.
+HANDY is a full-stack project and learning management application designed to streamline personal productivity through structured project tracking, progress analytics, and streak-based motivation. It features a modern React + Vite + TypeScript client with a scalable Express and MongoDB backend for efficient data handling. The platform centralizes tasks, learning plans, and performance insights in a clean, dashboard-driven workflow.
 
 ---
 

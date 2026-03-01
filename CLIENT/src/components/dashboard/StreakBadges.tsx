@@ -9,7 +9,7 @@ export default function StreakBadges({ streaks }) {
       {streaks.map((streak) => (
         <Card key={streak.title} className="p-5 border-0 shadow-sm hover:shadow-md transition-shadow">
           <div className="flex items-center justify-between mb-4">
-            <h4 className="font-semibold text-sm">{streak.title} Streak</h4>
+            <h4 className="font-semibold text-sm">{streak.title} Streak (mock Data)</h4>
             <Flame className="w-5 h-5 text-warning" />
           </div>
 
