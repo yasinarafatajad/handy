@@ -4,8 +4,8 @@
   "description": "FullStack Task management webse Project by Yasin Arafat Ajad",
   "main": " ",
   "scripts": {
-    "ins": "concurrently -n CLIENT,SERVER -c bgBlue.bold,bgMagenta.bold \"cd CLIENT && pnpm install\" \"cd SERVER && pnpm install\"",
-    "dev": "concurrently -n CLIENT,SERVER -c bgBlue.bold,bgMagenta.bold \"cd CLIENT && pnpm dev\" \"cd SERVER && pnpm dev\"",
+    "ins": "concurrently -n CLIENT,SERVER -c bgBlue.bold,bgGreen \"cd CLIENT && pnpm install\" \"cd SERVER && pnpm install\"",
+    "dev": "concurrently -n CLIENT,SERVER -c bgBlue.bold,bgGreen \"cd CLIENT && pnpm dev\" \"cd SERVER && pnpm dev\"",
     "build": "concurrently -n CLIENT -c bgBlue.bold \"cd CLIENT && pnpm build\""
   },
   "author": "Yasin Arafat Ajad",

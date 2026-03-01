@@ -8,7 +8,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
 import { Checkbox } from "@/components/ui/checkbox";
 import { toast } from "@/hooks/use-toast";
@@ -19,7 +19,7 @@ const emptyPhase = () => ({
   name: "",
   startDate: "",
   endDate: "",
-  subtasks: [{ id: crypto.randomUUID(), title: "", completed: false }],
+  subtasks: [],
 });
 
 export default function AddTask() {
@@ -36,7 +36,6 @@ export default function AddTask() {
   const [dueDate, setDueDate] = useState("");
   const [tags, setTags] = useState("");
   const [phases, setPhases] = useState([emptyPhase()]);
-  const formData = { taskType, title, description, priority, status, dueDate, tags, phases }
 
   const addPhase = () => setPhases([...phases, emptyPhase()]);
   const normalizePhases = (phases) =>
@@ -48,6 +47,13 @@ export default function AddTask() {
         id: s._id || s.id,
       })),
     }));
+ const normalizeDates = (phases) =>
+  phases.map(p => ({
+    ...p,
+    startDate: p.startDate ? new Date(p.startDate).toISOString().split("T")[0] : "",
+    endDate: p.endDate ? new Date(p.endDate).toISOString().split("T")[0] : "",
+    subtasks: p.subtasks,
+  }));
 
   const removePhase = (phaseId) => {
     if (phases.length <= 1) return;
@@ -101,9 +107,9 @@ export default function AddTask() {
         setDescription(data.description)
         setPriority(data.priority)
         setStatus(data.status)
-        setDueDate(data.dueDate)
+        setDueDate(data.dueDate ? new Date(data.dueDate).toISOString().split("T")[0] : "")
         setTags(data.tags)
-        setPhases(normalizePhases(data.phases))
+        setPhases(normalizeDates(normalizePhases(data.phases)));
       } catch (err) {
         console.log(err.message);
       } finally {
@@ -115,28 +121,48 @@ export default function AddTask() {
   }, [id])
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      if (isEdit) {
-        await api.put(`/task/${id}`, formData)
+  e.preventDefault();
 
-        toast({
-          title: `${taskType} updated!`,
-          description: `"${title}" has been updated.`,
-        })
-      } else {
-        await api.post("/addTask", formData)
+  const normalizedPhases = phases.map(p => ({
+    ...p,
+    startDate: p.startDate ? new Date(p.startDate) : null,
+    endDate: p.endDate ? new Date(p.endDate) : null,
+    subtasks: p.subtasks,
+  }));
 
-        toast({
-          title: `${taskType} created!`,
-          description: `"${title}" added.`,
-        })
-      }
-    } catch (err) {
-      console.log(err);
-    }
-    navigate("/");
+  const normalizedDueDate = dueDate ? new Date(dueDate) : null;
+
+  const formData = {
+    taskType,
+    title,
+    description,
+    priority,
+    status,
+    dueDate: normalizedDueDate,
+    tags,
+    phases: normalizedPhases,
   };
+
+  try {
+    if (isEdit) {
+      await api.put(`/task/${id}`, formData);
+      toast({
+        title: `${taskType} updated!`,
+        description: `"${title}" has been updated.`,
+      });
+    } else {
+      await api.post("/addTask", formData);
+      toast({
+        title: `${taskType} created!`,
+        description: `"${title}" added.`,
+      });
+    }
+  } catch (err) {
+    console.log(err.message);
+  }
+
+  navigate("/");
+};
   if (loading) return <p>Loading...</p>
   return (
     <DashboardLayout>
@@ -202,7 +228,7 @@ export default function AddTask() {
               </div>
               <div className="space-y-2">
                 <Label htmlFor="due">Due Date</Label>
-                <Input id="due" type="date" value={dueDate} onChange={(e) => setDueDate(e.target.value)} />
+                <Input id="due" placeholder="YYYY/MM/DD" type='date' value={dueDate} onChange={(e) => setDueDate(e.target.value)} />
               </div>
             </div>
 
@@ -247,11 +273,11 @@ export default function AddTask() {
                   <div className="grid grid-cols-2 gap-3">
                     <div className="space-y-1">
                       <Label className="text-xs">Start Date</Label>
-                      <Input type="date" value={phase.startDate} onChange={(e) => updatePhase(phase.id, "startDate", e.target.value)} />
+                      <Input type="date" placeholder="YYYY/MM/DD" value={phase.startDate} onChange={(e) => updatePhase(phase.id, "startDate", e.target.value)} />
                     </div>
                     <div className="space-y-1">
                       <Label className="text-xs">End Date</Label>
-                      <Input type="date" value={phase.endDate} onChange={(e) => updatePhase(phase.id, "endDate", e.target.value)} />
+                      <Input type="date" placeholder="YYYY/MM/DD" value={phase.endDate} onChange={(e) => updatePhase(phase.id, "endDate", e.target.value)} />
                     </div>
                   </div>
 
