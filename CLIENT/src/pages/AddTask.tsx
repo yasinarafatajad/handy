@@ -47,13 +47,13 @@ export default function AddTask() {
         id: s._id || s.id,
       })),
     }));
- const normalizeDates = (phases) =>
-  phases.map(p => ({
-    ...p,
-    startDate: p.startDate ? new Date(p.startDate).toISOString().split("T")[0] : "",
-    endDate: p.endDate ? new Date(p.endDate).toISOString().split("T")[0] : "",
-    subtasks: p.subtasks,
-  }));
+  const normalizeDates = (phases) =>
+    phases.map(p => ({
+      ...p,
+      startDate: p.startDate ? new Date(p.startDate).toISOString().split("T")[0] : "",
+      endDate: p.endDate ? new Date(p.endDate).toISOString().split("T")[0] : "",
+      subtasks: p.subtasks,
+    }));
 
   const removePhase = (phaseId) => {
     if (phases.length <= 1) return;
@@ -120,59 +120,107 @@ export default function AddTask() {
     fetchTask()
   }, [id])
 
-  const handleSubmit = async (e) => {
-  e.preventDefault();
+  const handleSave = async (e) => {
+    e.preventDefault();
 
-   // Frontend validation
-  if (!taskType || !title.trim()) {
-    toast({
-      title: "Validation Error",
-      description: "Task Type and Title are required.",
-      variant: "destructive",
-    });
-    return;
-  }
-
-  const normalizedPhases = phases.map(p => ({
-    ...p,
-    startDate: p.startDate ? new Date(p.startDate) : null,
-    endDate: p.endDate ? new Date(p.endDate) : null,
-    subtasks: p.subtasks,
-  }));
-
-  const normalizedDueDate = dueDate ? new Date(dueDate) : null;
-
-  const formData = {
-    taskType,
-    title,
-    description,
-    priority,
-    status,
-    dueDate: normalizedDueDate,
-    tags,
-    phases: normalizedPhases,
-  };
-
-  try {
-    if (isEdit) {
-      await api.put(`/task/${id}`, formData);
+    // Frontend validation
+    if (!taskType || !title.trim()) {
       toast({
-        title: `${taskType} updated!`,
-        description: `"${title}" has been updated.`,
+        title: "Validation Error",
+        description: "Task Type and Title are required.",
+        variant: "destructive",
       });
-    } else {
-      await api.post("/addTask", formData);
-      toast({
-        title: `${taskType} created!`,
-        description: `"${title}" added.`,
-      });      
+      return;
     }
-  } catch (err) {
-    console.log(err.message);
-  }
 
-  navigate("/");
-};
+    const normalizedPhases = phases.map(p => ({
+      ...p,
+      startDate: p.startDate ? new Date(p.startDate) : null,
+      endDate: p.endDate ? new Date(p.endDate) : null,
+      subtasks: p.subtasks,
+    }));
+
+    const normalizedDueDate = dueDate ? new Date(dueDate) : null;
+
+    const formData = {
+      taskType,
+      title,
+      description,
+      priority,
+      status,
+      dueDate: normalizedDueDate,
+      tags,
+      phases: normalizedPhases,
+    };
+
+    try {
+      if (isEdit) {
+        await api.put(`/task/${id}`, formData);
+      } else {
+        await api.post("/addTask", formData);
+      }
+      toast({
+        title: `${taskType} saved!`,
+      });
+    } catch (err) {
+      console.log(err.message);
+    }
+
+    return;
+  };
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    // Frontend validation
+    if (!taskType || !title.trim()) {
+      toast({
+        title: "Validation Error",
+        description: "Task Type and Title are required.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    const normalizedPhases = phases.map(p => ({
+      ...p,
+      startDate: p.startDate ? new Date(p.startDate) : null,
+      endDate: p.endDate ? new Date(p.endDate) : null,
+      subtasks: p.subtasks,
+    }));
+
+    const normalizedDueDate = dueDate ? new Date(dueDate) : null;
+
+    const formData = {
+      taskType,
+      title,
+      description,
+      priority,
+      status,
+      dueDate: normalizedDueDate,
+      tags,
+      phases: normalizedPhases,
+    };
+
+    try {
+      if (isEdit) {
+        await api.put(`/task/${id}`, formData);
+        toast({
+          title: `${taskType} updated!`,
+          description: `"${title}" has been updated.`,
+        });
+      } else {
+        await api.post("/addTask", formData);
+        toast({
+          title: `${taskType} created!`,
+          description: `"${title}" added.`,
+        });
+      }
+    } catch (err) {
+      console.log(err.message);
+    }
+
+    navigate("/");
+  };
   if (loading) return <p>Loading...</p>
   return (
     <DashboardLayout>
@@ -325,6 +373,7 @@ export default function AddTask() {
           {/* Submit */}
           <div className="flex items-center gap-3 justify-end">
             <Button type="button" variant="outline" onClick={() => navigate(-1)}>Cancel</Button>
+            <Button type="submit" variant="outline" onClick={handleSave}>Save</Button>
             <Button type="submit">
               {isEdit ? `Update ${taskType === "project" ? "Project" : "Learning"} Task` : `Create ${taskType === "project" ? "Project" : "Learning"} Task`}
             </Button>
