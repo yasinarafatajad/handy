@@ -123,6 +123,16 @@ export default function AddTask() {
   const handleSubmit = async (e) => {
   e.preventDefault();
 
+   // Frontend validation
+  if (!taskType || !title.trim()) {
+    toast({
+      title: "Validation Error",
+      description: "Task Type and Title are required.",
+      variant: "destructive",
+    });
+    return;
+  }
+
   const normalizedPhases = phases.map(p => ({
     ...p,
     startDate: p.startDate ? new Date(p.startDate) : null,
@@ -151,17 +161,19 @@ export default function AddTask() {
         description: `"${title}" has been updated.`,
       });
     } else {
-      await api.post("/addTask", formData);
+      // await api.post("/addTask", formData);
       toast({
         title: `${taskType} created!`,
         description: `"${title}" added.`,
       });
+      console.log(formData);
+      
     }
   } catch (err) {
     console.log(err.message);
   }
 
-  navigate("/");
+  // navigate("/");
 };
   if (loading) return <p>Loading...</p>
   return (
@@ -273,11 +285,11 @@ export default function AddTask() {
                   <div className="grid grid-cols-2 gap-3">
                     <div className="space-y-1">
                       <Label className="text-xs">Start Date</Label>
-                      <Input type="date" placeholder="YYYY/MM/DD" value={phase.startDate} onChange={(e) => updatePhase(phase.id, "startDate", e.target.value)} />
+                      <Input type="date" value={phase.startDate} onChange={(e) => updatePhase(phase.id, "startDate", e.target.value)} />
                     </div>
                     <div className="space-y-1">
                       <Label className="text-xs">End Date</Label>
-                      <Input type="date" placeholder="YYYY/MM/DD" value={phase.endDate} onChange={(e) => updatePhase(phase.id, "endDate", e.target.value)} />
+                      <Input type="date" value={phase.endDate} onChange={(e) => updatePhase(phase.id, "endDate", e.target.value)} />
                     </div>
                   </div>
 

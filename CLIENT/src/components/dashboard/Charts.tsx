@@ -95,7 +95,7 @@ const Charts = ({ projectCompletion, learningCompletion, productivity, statusDis
         <DonutChart title="Learning Completion" data={learningCompletion} />
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <ProductivityChart data={productivity} />
+        {/* <ProductivityChart data={productivity} /> */}
         <StatusBarChart data={statusDistribution} />
       </div>
     </div>

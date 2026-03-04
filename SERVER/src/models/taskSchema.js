@@ -4,7 +4,6 @@ const SubtaskSchema = new mongoose.Schema(
   {
     title: {
       type: String,
-      required: true,
       trim: true,
     },
     completed: {
@@ -19,7 +18,6 @@ const PhaseSchema = new mongoose.Schema(
   {
     name: {
       type: String,
-      required: true,
       trim: true,
     },
     startDate: Date,

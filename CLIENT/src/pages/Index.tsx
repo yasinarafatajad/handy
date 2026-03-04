@@ -68,7 +68,7 @@ const Index = () => {
         <StatCards title="Learning Overview" stats={learningStats} />
 
         {/* Section B: Streaks */}
-        <StreakBadges streaks={[projectStreak, learningStreak]} />
+        {/* <StreakBadges streaks={[projectStreak, learningStreak]} /> */}
 
         {/* Section C: Charts */}
         <Charts
