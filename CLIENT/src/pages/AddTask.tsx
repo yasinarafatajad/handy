@@ -161,19 +161,17 @@ export default function AddTask() {
         description: `"${title}" has been updated.`,
       });
     } else {
-      // await api.post("/addTask", formData);
+      await api.post("/addTask", formData);
       toast({
         title: `${taskType} created!`,
         description: `"${title}" added.`,
-      });
-      console.log(formData);
-      
+      });      
     }
   } catch (err) {
     console.log(err.message);
   }
 
-  // navigate("/");
+  navigate("/");
 };
   if (loading) return <p>Loading...</p>
   return (
